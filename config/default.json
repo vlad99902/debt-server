@@ -1,0 +1,6 @@
+{
+  "port": 5000,
+  "mongoUri": "mongodb+srv://vlad99902ipad:qwerty123456@cluster0.px9ac.mongodb.net/debt-accounting?retryWrites=true&w=majority",
+  "jwtSecret": "Compressingobjects:100acascascafwaeg",
+  "baseUrl": "http://localhost:5000"
+}
