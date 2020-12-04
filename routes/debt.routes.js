@@ -34,10 +34,9 @@ router.get('/', auth, async (req, res) => {
 
 router.delete('/:id', auth, async (req, res) => {
   try {
-    const debt = await Debt.deleteOne({ _id: req.body._id });
+    await Debt.deleteOne({ _id: req.body._id });
 
-    res.status(204).json({ message: 'Все заебись!' });
-    console.log(res);
+    res.status(204).send();
   } catch (e) {
     res.status(500).json({ message: 'Something wrong with delete debt' });
   }
