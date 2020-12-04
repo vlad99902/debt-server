@@ -9,12 +9,11 @@ router.post('/add', auth, async (req, res) => {
     const baseUrl = config.get('baseUrl');
     //TODO логика добавления в бд
     // const { _id, title, sum, completed, owe } = req.body;
+
     const debt = new Debt({
       ...req.body.dataToSend,
       owner: req.user.userId,
     });
-    console.log(debt);
-    console.log(req.body);
 
     await debt.save();
     res.status(201).json(debt);
@@ -30,6 +29,17 @@ router.get('/', auth, async (req, res) => {
     res.json(debts);
   } catch (e) {
     res.status(500).json({ message: 'Something wrong with get all debts' });
+  }
+});
+
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    const debt = await Debt.deleteOne({ _id: req.body._id });
+
+    res.status(204).json({ message: 'Все заебись!' });
+    console.log(res);
+  } catch (e) {
+    res.status(500).json({ message: 'Something wrong with delete debt' });
   }
 });
 
