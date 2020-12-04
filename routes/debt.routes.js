@@ -8,14 +8,13 @@ router.post('/add', auth, async (req, res) => {
   try {
     const baseUrl = config.get('baseUrl');
     //TODO логика добавления в бд
-    const { title, sum, completed, owe } = req.body;
+    // const { _id, title, sum, completed, owe } = req.body;
     const debt = new Debt({
-      title,
-      sum,
-      completed,
-      owe,
+      ...req.body.dataToSend,
       owner: req.user.userId,
     });
+    console.log(debt);
+    console.log(req.body);
 
     await debt.save();
     res.status(201).json(debt);
