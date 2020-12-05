@@ -42,4 +42,18 @@ router.delete('/:id', auth, async (req, res) => {
   }
 });
 
+router.put('/:id', auth, async (req, res) => {
+  try {
+    const debt = await Debt.update(
+      { _id: req.body.item._id },
+      { $set: { ...req.body.item } },
+    );
+    console.log(req.body);
+    console.log(debt);
+    res.status(204).send();
+  } catch (e) {
+    res.status(500).json({ message: 'Something wrong with update debt' });
+  }
+});
+
 module.exports = router;
