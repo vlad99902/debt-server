@@ -1,5 +1,6 @@
 const express = require('express');
 const config = require('config');
+const path = require('path');
 const mongoose = require('mongoose');
 
 const app = express();
@@ -10,6 +11,10 @@ app.use(express.json({ extended: true }));
 //подключаемся к роуту
 app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/debt', require('./routes/debt.routes'));
+
+// if(process.env.NODE_ENV === 'production') {
+//   app.use('/', express.static(path.join()))
+// }
 
 const PORT = config.get('port') || 5000;
 
