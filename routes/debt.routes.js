@@ -2,13 +2,12 @@ const { Router, response, request } = require('express');
 const config = require('config');
 const Debt = require('../models/Debt');
 const auth = require('../middleware/auth.middleware');
+const ObjectID = require('mongodb').ObjectID;
 const router = Router();
 
 router.post('/add', auth, async (req, res) => {
   try {
     const baseUrl = config.get('baseUrl');
-    //TODO логика добавления в бд
-    // const { _id, title, sum, completed, owe } = req.body;
 
     const debt = new Debt({
       ...req.body.dataToSend,
@@ -34,11 +33,18 @@ router.get('/', auth, async (req, res) => {
 
 router.delete('/:id', auth, async (req, res) => {
   try {
-    await Debt.deleteOne({ _id: req.body._id });
+    const result = await Debt.deleteOne({
+      _id: ObjectID(req.body._id),
+    });
 
-    res.status(204).send();
+    if (result.deletedCount !== 1) {
+      res.status(500).json({ message: `Debt ${req.body._id} not found` });
+    }
+
+    res.json({ message: `Debt ${req.body._id} was successfully deleted` });
   } catch (e) {
-    res.status(500).json({ message: 'Something wrong with delete debt' });
+    console.log(e);
+    res.status(500).json({ message: e });
   }
 });
 
@@ -48,7 +54,9 @@ router.put('/:id', auth, async (req, res) => {
       { _id: req.body.item._id },
       { $set: { ...req.body.item } },
     );
-    res.status(204).send();
+    res
+      .status(200)
+      .json({ message: `Debt ${req.body.item._id} was successfully updated` });
   } catch (e) {
     res.status(500).json({ message: 'Something wrong with update debt' });
   }
