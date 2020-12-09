@@ -16,7 +16,7 @@ app.use('/api/debt', require('./routes/debt.routes'));
 //   app.use('/', express.static(path.join()))
 // }
 
-const PORT = config.get('port') || 5000;
+const PORT = process.env.PORT || 5000;
 
 async function start() {
   try {
