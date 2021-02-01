@@ -1,6 +1,0 @@
-{
-  "port": 80,
-  "mongoUri": "mongodb+srv://vlad99902ipad:qwerty123456@cluster0.px9ac.mongodb.net/debt-accounting?retryWrites=true&w=majority",
-  "jwtSecret": "Compressingobjects:100acascascafwaeg",
-  "baseUrl": "https://debt-accounting-server.herokuapp.com/"
-}
